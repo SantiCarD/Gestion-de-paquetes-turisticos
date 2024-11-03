@@ -1,0 +1,260 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos base */
+body, html {
+  height: 100%;
+  width: 100%;
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+/* Layout principal */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Navbar y header */
+.paquete-cultural-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #1a1a1a;
+  padding: 1rem;
+  z-index: 1000;
+  border-bottom: 1px solid #333;
+}
+
+.paquete-cultural-nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Contenedor específico para la navegación y el botón volver */
+.nav-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* Título Paquete Cultural */
+.paquete-cultural-title {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 5rem auto 2rem;
+  width: 100%;
+}
+
+/* Botones */
+.paquete-cultural-button {
+  background-color: #007bff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.paquete-cultural-button:hover {
+  background-color: #0056b3;
+}
+
+.volver-menu-principal-button {
+  background-color: #28a745;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.volver-menu-principal-button:hover {
+  background-color: #218838;
+}
+
+/* Contenedor principal para todas las vistas */
+.paquete-cultural-main-content {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estilos para el formulario de adicionar */
+.adicionar-paquete-container {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.adicionar-paquete-title {
+  color: #000000;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.adicionar-paquete-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.adicionar-paquete-input {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: #000000;
+}
+
+.adicionar-paquete-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.adicionar-paquete-button:hover {
+  background-color: #45a049;
+}
+
+/* Estilos para la tabla de listar */
+.listar-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.listar-table {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border-collapse: collapse;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.listar-table th,
+.listar-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  color: #000000;
+}
+
+.listar-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.listar-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Estilos para búsqueda */
+.buscar-container {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.buscar-title {
+  color: #000000;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.buscar-input-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  color: #000000;
+}
+
+.buscar-input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  
+}
+.buscar-inputt {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #000000;
+}
+
+.buscar-button {
+  background-color: #007bff;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.eliminar-button {
+  background-color: #e11616;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.actualizar-button {
+  background-color: #e3f800;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buscar-button:hover {
+  background-color: #0056b3;
+}
+
+/* Mensajes de éxito y error */
+.success-message {
+  color: #28a745;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.error-message {
+  color: #dc3545;
+  margin-top: 1rem;
+  text-align: center;
+}
