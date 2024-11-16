@@ -14,5 +14,5 @@ public interface IPackageService {
     boolean deletePackage(int id);
     List<CulturalPackage> listPackages(String filter);
     List<CulturalPackage> getList();
-    //boolean guideExist(List<Integer> ints);
+    boolean guideExist(List<Integer> ints);
 }

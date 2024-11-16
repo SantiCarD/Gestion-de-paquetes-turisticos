@@ -82,30 +82,32 @@ public class PackageController {
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode jsonNode = mapper.readTree(packageDto);
-            /*JsonNode guiasNode = jsonNode.get("guias");
+            JsonNode guiasNode = jsonNode.get("guias");
             ArrayList<Guide> guides = new ArrayList<>();
             List<Integer> ints = new ArrayList<>();
-
+            boolean x = false;
             for (int i = 0; i < guiasNode.size(); i++) {
                 JsonNode idNode = guiasNode.get(i);
 
                 if (idNode != null && !idNode.isNull()) {
                     int guideId = idNode.asInt();
                     ints.add(guideId);
-                    Guide guide = servicio.searchGuideById(guideId);
+                    Optional<Guide> guide = servicio.searchGuideById(guideId);
 
-                    if (guide != null) {
-                        guides.add(guide);
-                    }
-
-                    else {
+                    if (guide.isPresent()) {
+                        guides.add(guide.get());
+                    } else {
                         System.out.println("Guía no encontrada para ID: " + guideId);
+                        x=true;
                     }
                 } else {
                     System.out.println("ID no encontrado o nulo en el nodo guía en la posición: " + i);
                 }
-            }*/
-
+            }
+            if(x)
+            {
+             ints.clear();
+            }
             String fechaString = jsonNode.get("fechaInicio").asText();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
             LocalDateTime fechaInicio = LocalDateTime.parse(fechaString, formatter);
@@ -113,22 +115,21 @@ public class PackageController {
             DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
             LocalDateTime fechaFin = LocalDateTime.parse(fechaString1, formatter2);
 
-            /*if(packageService.guideExist(ints))
-            {
+            if (packageService.guideExist(ints)) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("Ya existe un paquete con un guia de los adicionados"); // 409 Conflict
-            }
-            else
-            {*/
+            } else {
                 CulturalPackage cp = new CulturalPackage(jsonNode.get("nombre").asText(),
                         jsonNode.get("id").asInt(),
                         jsonNode.get("precio").asDouble(),
                         fechaInicio,
-                        fechaFin/*,
-                        guides*/);
+                        fechaFin,
+                        guides);
+                System.out.println(cp.getGuias().toString());
                 CulturalPackage createdPackage = packageService.createPackage(cp);
 
                 return ResponseEntity.status(HttpStatus.CREATED).body(createdPackage); // 201 Created
-            //}
+                //}
+            }
         } catch (DuplicatedIdException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage()); // 409 Conflict
 
@@ -144,13 +145,12 @@ public class PackageController {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage()); // 409 Conflict
         }
     }
 
-    // Actualizar paquete cultural
+        // Actualizar paquete cultural
     @PutMapping("/put/{id}")
     public ResponseEntity<?> updatePackage(
             @PathVariable int id,
@@ -158,7 +158,7 @@ public class PackageController {
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode jsonNode = mapper.readTree(packageDto);
-            /*JsonNode guiasNode = jsonNode.get("guias");
+            JsonNode guiasNode = jsonNode.get("guias");
 
             List<Integer> newGuideIds = new ArrayList<>();
             ArrayList<Guide> updatedGuides = new ArrayList<>();
@@ -168,24 +168,24 @@ public class PackageController {
                 int guideId = guiasNode.get(i).asInt();
                 newGuideIds.add(guideId); // Añadir a la lista de IDs
 
-                Guide guide = servicio.searchGuideById(guideId);
-                if (guide != null) {
-                    updatedGuides.add(guide); // Añadir guía al listado actualizado
+                Optional<Guide> guide = servicio.searchGuideById(guideId);
+                if (guide.isPresent()) {
+                    updatedGuides.add(guide.get()); // Añadir guía al listado actualizado
                 } else {
                     return ResponseEntity.status(HttpStatus.NOT_FOUND)
                             .body("Guía con ID " + guideId + " no encontrada.");
                 }
             }
-            */
+
             // Verificar si existe el paquete que queremos actualizar
             Optional<CulturalPackage> existingPackage = packageService.searchPackageById(id);
-            if (existingPackage == null) {
+            if (existingPackage.isPresent()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("Paquete no encontrado.");
             }
 
             // Identificar conflictos con los nuevos guías
-            /*List<Integer> existingGuideIds = existingPackage.get().getGuias().stream()
+            List<Integer> existingGuideIds = existingPackage.get().getGuias().stream()
                     .map(Guide::getId)
                     .toList();
 
@@ -199,7 +199,7 @@ public class PackageController {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
                         .body("Conflicto: Algunos de los guías ya están asignados a otro paquete.");
             }
-            */
+
             // Actualizar las fechas del paquete
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
             LocalDateTime fechaInicio = LocalDateTime.parse(jsonNode.get("fechaInicio").asText(), formatter);
@@ -211,8 +211,8 @@ public class PackageController {
                     id,
                     jsonNode.get("precio").asDouble(),
                     fechaInicio,
-                    fechaFin//,
-                    //updatedGuides
+                    fechaFin,
+                    updatedGuides
             );
             CulturalPackage updatedPackage = packageService.updatePackage(cp);
             return ResponseEntity.status(HttpStatus.OK).body(updatedPackage); // 200 OK

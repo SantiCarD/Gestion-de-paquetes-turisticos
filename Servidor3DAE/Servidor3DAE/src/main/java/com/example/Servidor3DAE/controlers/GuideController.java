@@ -1,4 +1,4 @@
-/*package com.example.Servidor3DAE.controlers;
+package com.example.Servidor3DAE.controlers;
 
 import com.example.Servidor3DAE.exceptions.DuplicatedIdException;
 import com.example.Servidor3DAE.exceptions.DuplicatedNameException;
@@ -12,10 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5174"})
@@ -51,9 +48,9 @@ public class GuideController {
     }
     // Obtener paquete por ID
     @GetMapping("/getById/{id}")
-    public ResponseEntity<Guide> getPackageById(@PathVariable int id) {
-        Guide guide = guideService.searchGuideById(id);
-        if (guide != null) {
+    public ResponseEntity<Optional<Guide>> getPackageById(@PathVariable int id) {
+        Optional<Guide> guide = guideService.searchGuideById(id);
+        if (guide.isPresent()) {
             return ResponseEntity.ok(guide); // 200 OK
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404 Not Found
@@ -61,8 +58,8 @@ public class GuideController {
     }
 
     @GetMapping("/getByName/{nombre}")
-    public ResponseEntity<Guide> getPackageByName(@PathVariable String nombre) {
-        Guide guide = guideService.searchGuideByName(nombre);
+    public ResponseEntity<Optional<Guide>> getPackageByName(@PathVariable String nombre) {
+        Optional<Guide> guide = guideService.searchGuideByName(nombre);
         if (guide != null) {
             return ResponseEntity.ok(guide); // 200 OK
         } else {
@@ -74,13 +71,7 @@ public class GuideController {
     @PostMapping("/create")
     public ResponseEntity<?> createPackage(@RequestBody Guide guidee) {
         try {
-            Guide guide = guideService.createGuide(
-                    guidee.getId(),
-                    guidee.getNombre(),
-                    guidee.getCalificacion(),
-                    guidee.getEdad(),
-                    guidee.getFechaNacimiento()
-            );
+            Guide guide = guideService.createGuide(guidee);
             return ResponseEntity.status(HttpStatus.CREATED).body(guide); // 201 Created
 
         } catch (DuplicatedIdException e) {
@@ -103,13 +94,7 @@ public class GuideController {
             @PathVariable int id,
             @RequestBody Guide guide) {
         try {
-            Guide guide1 = guideService.updateGuide(
-                    id,
-                    guide.getNombre(),
-                    guide.getCalificacion(),
-                    guide.getEdad(),
-                    guide.getFechaNacimiento()
-            );
+            Guide guide1 = guideService.updateGuide(guide);
             if (guide1 != null) {
                 return ResponseEntity.ok(guide1); // 200 OK
             } else {
@@ -129,14 +114,14 @@ public class GuideController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deletePackage(@PathVariable int id) {
-        Guide guia = guideService.searchGuideById(id);
+        Optional<Guide> guia = guideService.searchGuideById(id);
         boolean deleted = guideService.deleteGuide(id);
         if (deleted) {
             for(CulturalPackage cp : servicio.getList())
                 {
                     if(cp.guideExist(id))
                     {
-                        ArrayList<Guide> guiaspc = cp.getGuias();
+                        List<Guide> guiaspc = cp.getGuias();
                         guiaspc.remove(guia);
                         System.out.println(guiaspc.toString());
                         cp.setGuias(guiaspc);
@@ -148,4 +133,4 @@ public class GuideController {
         }
     }
 
-}*/
+}

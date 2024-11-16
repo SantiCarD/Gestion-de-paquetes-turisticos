@@ -25,6 +25,7 @@ class PackageService {
         item.precio, // item.precio en lugar de item.getprecio
         item.fechaInicio, // Fecha inicio
         item.fechaFin, // Fecha fin
+        item.guias
       ));
   
       // Mostrar los datos de paquetes en formato JSON
@@ -109,7 +110,8 @@ class PackageService {
           response.data.nombre,
           response.data.precio,
           response.data.fechaInicio,
-          response.data.fechaFin
+          response.data.fechaFin,
+          response.data.guias
         );
         return x;
       }
@@ -130,7 +132,8 @@ class PackageService {
           response.data.nombre,
           response.data.precio,
           response.data.fechaInicio,
-          response.data.fechaFin
+          response.data.fechaFin,
+          response.data.guias
         );
         return x;
       }

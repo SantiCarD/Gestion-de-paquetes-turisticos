@@ -4,6 +4,9 @@ import com.example.Servidor3DAE.exceptions.*;
 import com.example.Servidor3DAE.models.CulturalPackage;
 import com.example.Servidor3DAE.models.Guide;
 import com.example.Servidor3DAE.repositories.CulturalPackageRepository;
+import com.example.Servidor3DAE.repositories.GuideRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,17 +22,31 @@ public class PackageService implements IPackageService {
 
     @Autowired
     private CulturalPackageRepository culturalPackageRepository;
+    @Autowired
+    private GuideRepository guideRepository;
 
-    /*public boolean guideExist(List<Integer> guideIds) {
+    public boolean guideExist(List<Integer> guideIds) {
+        System.out.println("Verificando guías con IDs: " + guideIds);
+
         for (CulturalPackage cu : culturalPackageRepository.findAll()) {
+            System.out.println("Revisando paquete: " + cu.getId() + " - " + cu.getNombre());
+            System.out.println("Guías del paquete: " + cu.getGuias().stream()
+                    .map(Guide::getId)
+                    .collect(Collectors.toList()));
+
             for (Guide g : cu.getGuias()) {
+                System.out.println("Comparando guía: " + g.getId());
                 if (guideIds.contains(g.getId())) {
-                    return true; // Ya existe una guía en uso por otro paquete
+                    System.out.println("¡Guía duplicada encontrada!");
+                    return true;
                 }
+
             }
         }
-        return false; // Ninguna guía está en otro paquete
-    }*/
+
+        System.out.println("No se encontraron guías duplicadas");
+        return false;
+    }
 
 
     public List<CulturalPackage> getList() {
@@ -81,9 +99,38 @@ public class PackageService implements IPackageService {
         if (cp.getFechaInicio().isAfter(cp.getFechaFin())) {
             throw new InvalidDateRangeException("La fecha de inicio debe ser anterior a la fecha de fin.");
         }
+        List<Integer> guiasPaqueteid= new ArrayList<>();
+        for (Guide cu : cp.getGuias()) {
+            guiasPaqueteid.add(cu.getId());
+        }
 
+            if (cp.getGuias().isEmpty()) {
+                System.out.println("xd");
+                throw new DuplicatedIdException("Uno de los guías no existe.");
+            }
+
+
+        if (guideExist(guiasPaqueteid))
+        {
+            throw new DuplicatedIdException("Ya existe un paquete con uno de esos guias.");
+        }
+
+        //hacer que no se pueda enlazar un guia inexistente
         CulturalPackage responsepac = culturalPackageRepository.save(cp);
-        return responsepac;
+        for (Guide cu : cp.getGuias()) {
+            if(cu.getCulturalPackage()==null)
+            {
+                cu.setCulturalPackage(cp);
+                System.out.println("xd");
+            }
+            else
+            {
+                System.out.println("xd");
+                throw new DuplicatedIdException("El guia "+cu.getId()+" ya tiene un paquete asociado");
+            }
+        }
+        CulturalPackage responsepack = culturalPackageRepository.save(cp);
+        return responsepack;
     }
 
 
@@ -130,8 +177,13 @@ public class PackageService implements IPackageService {
         Optional<CulturalPackage> paqueteExistente = searchPackageById(id);
 
         // Verificar si el paquete existe
-        if (paqueteExistente == null) {
+        if (paqueteExistente.isEmpty()) {
             throw new PackageNotFoundException("No se encontró un paquete con el ID proporcionado.");
+        }
+        for(Guide g : paqueteExistente.get().getGuias())
+        {
+            g.setCulturalPackage(null);
+
         }
 
         // Eliminar el paquete de la lista

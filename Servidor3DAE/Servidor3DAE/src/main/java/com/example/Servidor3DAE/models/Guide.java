@@ -1,53 +1,36 @@
 package com.example.Servidor3DAE.models;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Guide {
-    private int id;
+
+    @Id
+    private int id;  // Define "id" como la clave primaria
+
+    @Column(nullable = false, length = 50)  // Define que "nombre" no puede ser nulo y tiene un límite de 50 caracteres
     private String nombre;
+
+    @Column(nullable = false)  // Define que "calificacion" no puede ser nulo
     private double calificacion;
+
+    @Column(nullable = false)  // Define que "edad" no puede ser nulo
     private int edad;
+
+    @Column(nullable = false)  // Define que "fechaNacimiento" no puede ser nulo
     private LocalDate fechaNacimiento;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public double getCalificacion() {
-        return calificacion;
-    }
-
-    public void setCalificacion(double calificacion) {
-        this.calificacion = calificacion;
-    }
-
-    public int getEdad() {
-        return edad;
-    }
-
-    public void setEdad(int edad) {
-        this.edad = edad;
-    }
-
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
+    @ManyToOne
+    @JoinColumn(name = "cultural_package_id", referencedColumnName = "id", nullable = true)
+    private CulturalPackage culturalPackage;
 
     public Guide(int id, String nombre, double calificacion, int edad, LocalDate fechaNacimiento) {
         this.id = id;
@@ -55,16 +38,5 @@ public class Guide {
         this.calificacion = calificacion;
         this.edad = edad;
         this.fechaNacimiento = fechaNacimiento;
-    }
-
-    @Override
-    public String toString() {
-        return "Guide{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", calificacion=" + calificacion +
-                ", edad=" + edad +
-                ", fechaNacimiento=" + fechaNacimiento +
-                '}';
     }
 }
