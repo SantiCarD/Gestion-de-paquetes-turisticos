@@ -1,5 +1,6 @@
 package com.example.Servidor3DAE.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +31,7 @@ public class Guide {
 
     @ManyToOne
     @JoinColumn(name = "cultural_package_id", referencedColumnName = "id", nullable = true)
+    @JsonBackReference
     private CulturalPackage culturalPackage;
 
     public Guide(int id, String nombre, double calificacion, int edad, LocalDate fechaNacimiento) {

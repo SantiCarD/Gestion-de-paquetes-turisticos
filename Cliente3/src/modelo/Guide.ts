@@ -1,3 +1,5 @@
+import { PaqueteCultural } from "./PaqueteCultural";
+
 // Definimos la clase Guide (Guía)
 export class Guide {
     // Propiedades de la clase Guide
@@ -6,6 +8,7 @@ export class Guide {
     private calificacion: number;
     private edad: number;
     private fechaNacimiento: string;
+    private culturalPackage: PaqueteCultural;
   
     // Constructor para inicializar las propiedades
     constructor(
@@ -63,6 +66,13 @@ export class Guide {
       this.fechaNacimiento = value;
     }
   
+    get getCulturalPackage(): PaqueteCultural {
+      return this.culturalPackage;
+    }
+  
+    set setCulturalPackage(value: PaqueteCultural) {
+      this.culturalPackage = value;
+    }
     // Método para representar la clase en formato string
     toString(): string {
       return `Guía:
@@ -70,7 +80,8 @@ export class Guide {
       Nombre: ${this.nombre}
       Calificación: ${this.calificacion}
       Edad: ${this.edad}
-      Fecha de Nacimiento: ${this.fechaNacimiento}`;
+      Fecha de Nacimiento: ${this.fechaNacimiento}
+      Paquete cultural: ${this.culturalPackage}`;
     }
   }
   

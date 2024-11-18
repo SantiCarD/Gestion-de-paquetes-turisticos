@@ -3,6 +3,7 @@ package com.example.Servidor3DAE.controlers;
 import com.example.Servidor3DAE.exceptions.*;
 import com.example.Servidor3DAE.models.CulturalPackage;
 import com.example.Servidor3DAE.models.Guide;
+import com.example.Servidor3DAE.models.PaqueteDTO;
 import com.example.Servidor3DAE.services.GuideService;
 import com.example.Servidor3DAE.services.IPackageService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/packages")
@@ -56,20 +58,42 @@ public class PackageController {
 
     // Obtener paquete por ID
     @GetMapping("/getById/{id}")
-    public ResponseEntity<Optional<CulturalPackage>> getPackageById(@PathVariable int id) {
+    public ResponseEntity<PaqueteDTO> getPackageById(@PathVariable int id) {
         Optional<CulturalPackage> culturalPackage = packageService.searchPackageById(id);
         if (culturalPackage.isPresent()) {
-            return ResponseEntity.ok(culturalPackage); // 200 OK
+            List<Integer> xdd = new ArrayList<>();
+            for(Guide xxx : culturalPackage.get().getGuias())
+            {
+                xdd.add(xxx.getId());
+            }
+            PaqueteDTO xxx = new PaqueteDTO(culturalPackage.get().getNombre(),
+                    culturalPackage.get().getId(),
+                    culturalPackage.get().getPrecio(),
+                    culturalPackage.get().getFechaInicio(),
+                    culturalPackage.get().getFechaFin(),
+                    xdd);
+            return ResponseEntity.ok(xxx); // 200 OK
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404 Not Found
         }
     }
 
     @GetMapping("/getByName/{nombre}")
-    public ResponseEntity<Optional<CulturalPackage>> getPackageByName(@PathVariable String nombre) {
+    public ResponseEntity<PaqueteDTO> getPackageByName(@PathVariable String nombre) {
         Optional<CulturalPackage> culturalPackage = packageService.searchPackageByName(nombre);
         if (culturalPackage.isPresent()) {
-            return ResponseEntity.ok(culturalPackage); // 200 OK
+            List<Integer> xdd = new ArrayList<>();
+            for(Guide xxx : culturalPackage.get().getGuias())
+            {
+                xdd.add(xxx.getId());
+            }
+            PaqueteDTO xxx = new PaqueteDTO(culturalPackage.get().getNombre(),
+                    culturalPackage.get().getId(),
+                    culturalPackage.get().getPrecio(),
+                    culturalPackage.get().getFechaInicio(),
+                    culturalPackage.get().getFechaFin(),
+                    xdd);
+            return ResponseEntity.ok(xxx); // 200 OK
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404 Not Found
         }
@@ -126,8 +150,18 @@ public class PackageController {
                         guides);
                 System.out.println(cp.getGuias().toString());
                 CulturalPackage createdPackage = packageService.createPackage(cp);
-
-                return ResponseEntity.status(HttpStatus.CREATED).body(createdPackage); // 201 Created
+                List<Integer> xdd = new ArrayList<>();
+                for(Guide xxx : createdPackage.getGuias())
+                {
+                    xdd.add(xxx.getId());
+                }
+                PaqueteDTO xxx = new PaqueteDTO(jsonNode.get("nombre").asText(),
+                        jsonNode.get("id").asInt(),
+                        jsonNode.get("precio").asDouble(),
+                        fechaInicio,
+                        fechaFin,
+                        xdd);
+                return ResponseEntity.status(HttpStatus.CREATED).body(xxx); // 201 Created
                 //}
             }
         } catch (DuplicatedIdException e) {
@@ -167,11 +201,20 @@ public class PackageController {
             for (int i = 0; i < guiasNode.size(); i++) {
                 int guideId = guiasNode.get(i).asInt();
                 newGuideIds.add(guideId); // Añadir a la lista de IDs
+                System.out.println(guideId);
+                System.out.println(newGuideIds.toString());
+
+                if(guideId==0)
+                {
+                    return ResponseEntity.status(HttpStatus.CREATED)
+                            .body("Paquete creado sin guias");
+                }
 
                 Optional<Guide> guide = servicio.searchGuideById(guideId);
                 if (guide.isPresent()) {
-                    updatedGuides.add(guide.get()); // Añadir guía al listado actualizado
-                } else {
+                    updatedGuides.add(guide.get()); // Añadir guía al listado actualizadoelse if()
+
+                }else {
                     return ResponseEntity.status(HttpStatus.NOT_FOUND)
                             .body("Guía con ID " + guideId + " no encontrada.");
                 }
@@ -179,7 +222,7 @@ public class PackageController {
 
             // Verificar si existe el paquete que queremos actualizar
             Optional<CulturalPackage> existingPackage = packageService.searchPackageById(id);
-            if (existingPackage.isPresent()) {
+            if (existingPackage.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("Paquete no encontrado.");
             }
@@ -215,7 +258,18 @@ public class PackageController {
                     updatedGuides
             );
             CulturalPackage updatedPackage = packageService.updatePackage(cp);
-            return ResponseEntity.status(HttpStatus.OK).body(updatedPackage); // 200 OK
+            List<Integer> xdd = new ArrayList<>();
+            for(Guide xxx : updatedPackage.getGuias())
+            {
+                xdd.add(xxx.getId());
+            }
+            PaqueteDTO xxx = new PaqueteDTO(jsonNode.get("nombre").asText(),
+                    jsonNode.get("id").asInt(),
+                    jsonNode.get("precio").asDouble(),
+                    fechaInicio,
+                    fechaFin,
+                    xdd);
+            return ResponseEntity.status(HttpStatus.CREATED).body(xxx);// 200 OK
 
         }  catch (DuplicatedNameException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage()); // 409 Conflict

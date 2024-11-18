@@ -1,28 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import packageService from '../Servicios/PackageService';
 import { PaqueteCultural } from '../modelo/PaqueteCultural';
 import '../App.css';
 
 const ListarPaquetesCulturales = () => {
   const [paquetes, setPaquetes] = useState<Array<PaqueteCultural>>([]);
+  const [isLoading, setIsLoading] = useState(false); // Para mostrar un mensaje de carga
 
-  useEffect(() => {
-    const fetchPaquetes = async () => {
+    const listarPaquetes = async () => {
+      setIsLoading(true); // Inicia la carga
       try {
         const result = await packageService.listarPaquetes();
         console.log('Paquetes recibidos:', result); // Verifica la estructura en consola
         setPaquetes(result);
       } catch (error) {
         console.error('Error al obtener los paquetes:', error);
+      }finally {
+        setIsLoading(false); // Finaliza la carga
       }
     };
 
-    fetchPaquetes();
-  }, []);
 
   return (
     <div className="listar-container">
       <h2 className="listar-title">Lista de Paquetes Culturales</h2>
+      <button onClick={listarPaquetes} className="listar-button">
+        Listar Paquetes
+      </button>
+      {isLoading && <p>Cargando...</p>} {/* Mensaje de carga */}
+
       <table className="listar-table">
         <thead>
           <tr>

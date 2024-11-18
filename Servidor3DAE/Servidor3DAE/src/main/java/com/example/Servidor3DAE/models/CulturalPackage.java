@@ -1,5 +1,6 @@
 package com.example.Servidor3DAE.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +31,8 @@ public class CulturalPackage {
     @Column(nullable = false)  // Define que "fechaFin" no puede ser nulo
     private LocalDateTime fechaFin;
 
-    @OneToMany(mappedBy = "culturalPackage", cascade = CascadeType.PERSIST)  // Define una relación uno-a-muchos con la entidad Guide
+    @OneToMany(mappedBy = "culturalPackage", cascade = CascadeType.PERSIST)
+    @JsonManagedReference   // Define una relación uno-a-muchos con la entidad Guide
     private List<Guide> guias;
 
     public boolean guideExist(int id) {

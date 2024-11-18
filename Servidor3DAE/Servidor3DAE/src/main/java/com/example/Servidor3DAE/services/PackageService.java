@@ -106,7 +106,7 @@ public class PackageService implements IPackageService {
 
             if (cp.getGuias().isEmpty()) {
                 System.out.println("xd");
-                throw new DuplicatedIdException("Uno de los guías no existe.");
+                cp.setGuias(new ArrayList<Guide>());
             }
 
 
@@ -166,8 +166,21 @@ public class PackageService implements IPackageService {
 
         // Actualizar los atributos del paquete
 
-        CulturalPackage updatedPackage = culturalPackageRepository.save(cp);
-        return updatedPackage; // Retorna el paquete actualizado
+        CulturalPackage responsepac = culturalPackageRepository.save(cp);
+        for (Guide cu : cp.getGuias()) {
+            if(cu.getCulturalPackage()==null)
+            {
+                cu.setCulturalPackage(cp);
+                System.out.println("xd");
+            }
+            else
+            {
+                System.out.println("xd");
+                throw new DuplicatedIdException("El guia "+cu.getId()+" ya tiene un paquete asociado");
+            }
+        }
+        CulturalPackage responsepack = culturalPackageRepository.save(cp);
+        return responsepack;// Retorna el paquete actualizado
     }
 
 

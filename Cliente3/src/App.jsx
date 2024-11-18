@@ -9,6 +9,12 @@ import AdicionarPaquete from './components/AdicionarPaquete';
 import ActualizarPaquete from './components/ActualizarPaquete';
 import EliminarPaquete from './components/EliminarPaquete';
 import ListarPaquetesCulturales from './components/ListarPaquetesCulturales';
+import AdicionarGuia from './components/AdicionarGuia';
+import ActualizarGuia from './components/ActualizarGuia';
+import BuscarGuiaPorId from './components/BuscarGuiaPorId';
+import BuscarGuiaPorNombre from './components/BuscarGuiaPorNombre';
+import EliminarGuia from './components/EliminarGuia';
+import ListarGuias from './components/ListarGuias';
 
 const Form1 = ({ setCurrentView }) => (
   <div className="paquete-cultural-main-content">
@@ -18,6 +24,11 @@ const Form1 = ({ setCurrentView }) => (
         <li>
           <button className="paquete-cultural-button" onClick={() => setCurrentView('paqueteCultural')}>
             Paquete Cultural
+          </button>
+        </li>
+        <li>
+          <button className="paquete-cultural-button" onClick={() => setCurrentView('guia')}>
+            Guia
           </button>
         </li>
         <li>
@@ -73,6 +84,45 @@ const App = () => {
             </div>
           </div>
         );
+
+        case 'guia':
+        return (
+          <div className="flex flex-col mb-4">
+            <div className="paquete-cultural-header">
+              <div className="nav-controls">
+                <nav className="paquete-cultural-nav">
+                  <button className="paquete-cultural-button" onClick={() => setCurrentSubView('adicionar')}>
+                    Adicionar
+                  </button>
+                  <button className="paquete-cultural-button" onClick={() => setCurrentSubView('buscarporid')}>
+                    Buscar por ID
+                  </button>
+                  <button className="paquete-cultural-button" onClick={() => setCurrentSubView('buscarpornombre')}>
+                    Buscar por Nombre
+                  </button>
+                  <button className="paquete-cultural-button" onClick={() => setCurrentSubView('actualizar')}>
+                    Actualizar
+                  </button>
+                  <button className="paquete-cultural-button" onClick={() => setCurrentSubView('eliminar')}>
+                    Eliminar
+                  </button>
+                  <button className="paquete-cultural-button" onClick={() => setCurrentSubView('listar')}>
+                    Listar
+                  </button>
+                </nav>
+                <button className="volver-menu-principal-button" onClick={() => setCurrentView('main')}>
+                  Volver al Menú Principal
+                </button>
+              </div>
+            </div>
+            <h2 className="paquete-cultural-title">Guia</h2>
+            <div className="paquete-cultural-main-content">
+              {renderSubView2()}
+            </div>
+          </div>
+        );
+
+
       case 'ayuda':
         return (
           <div>
@@ -109,6 +159,25 @@ const App = () => {
         return <EliminarPaquete />;
       case 'listar':
         return <ListarPaquetesCulturales />;
+      default:
+        return <ListarPaquetesCulturales />;
+    }
+  };
+
+  const renderSubView2 = () => {
+    switch (currentSubView) {
+      case 'adicionar':
+        return <AdicionarGuia />;
+      case 'buscarporid':
+        return <BuscarGuiaPorId />;
+      case 'buscarpornombre':
+        return <BuscarGuiaPorNombre />;
+      case 'actualizar':
+        return <ActualizarGuia />;
+      case 'eliminar':
+        return <EliminarGuia />;
+      case 'listar':
+        return <ListarGuias />;
       default:
         return <ListarPaquetesCulturales />;
     }

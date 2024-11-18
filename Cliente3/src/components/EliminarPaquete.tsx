@@ -39,6 +39,7 @@ const EliminarPaquete = () => {
 
   // Función para eliminar el paquete
   const handleDeletePackage = async () => {
+    
     try {
       const result = await packageService.eliminarPaquete(Number(paqueteId));
       if (result) {

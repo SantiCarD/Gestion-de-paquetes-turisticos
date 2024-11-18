@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PackageService from '../Servicios/PackageService'; // Asegúrate de que la ruta sea correcta
 import { PaqueteCultural } from '../modelo/PaqueteCultural';
+import { Guide } from '../modelo/Guide';
 
 const BuscarPaquetePorId = () => {
   const [id, setId] = useState('');
@@ -8,7 +9,7 @@ const BuscarPaquetePorId = () => {
 
   const handleSearch = async () => {
     try {
-      const result = await PackageService.buscarPaquetePorId(Number(id));
+      const result = await PackageService.buscarPaquetePorId(parseInt(id));
       setPaquete(result);
       if (result) {
         alert(`ID del paquete: ${result.getid}`); // Asegúrate de que 'id' es el nombre correcto del atributo
@@ -19,6 +20,7 @@ const BuscarPaquetePorId = () => {
       console.error('Error al buscar el paquete:', error);
       alert('Ocurrió un error al buscar el paquete');
     }
+    
   };
 
   return (
@@ -38,13 +40,14 @@ const BuscarPaquetePorId = () => {
       </div>
 
       {paquete && (
-        <div className="paquete-card, buscar-inputt" >
+        <div className="paquete-card, buscar-inputt">
           <h3 className="paquete-title">Paquete Encontrado:</h3>
           <p className="paquete-attribute">ID: {paquete.getid}</p>
           <p className="paquete-attribute">Nombre: {paquete.getnombre}</p>
           <p className="paquete-attribute">Precio: {paquete.getprecio}</p>
           <p className="paquete-attribute">Fecha de Inicio: {new Date(paquete.getfechaInicio).toLocaleDateString()}</p>
           <p className="paquete-attribute">Fecha de Fin: {new Date(paquete.getfechaFin).toLocaleDateString()}</p>
+          <p className="paquete-attribute">Guias: {(paquete.getguias.toString())}</p>
           {/* Agrega más atributos según sea necesario */}
         </div>
       )}

@@ -69,10 +69,13 @@ export class PaqueteCultural {
   }
 
   get getguias(): number[] {
+    
     return this.guias;
-  }
+}
+  
 
   set setguias(value: number[]) {
+    
     this.guias = value;
   }
 
@@ -82,17 +85,18 @@ export class PaqueteCultural {
   }
 
   // Método para añadir un guía
-  public addGuide(guide: number): void {
-    if (!this.guideExist(guide)) {
-      this.guias.push(guide);
+  public addGuide(guide: Guide): void {
+    if (!this.guideExist(guide.getId)) {
+      this.guias.push(guide.getId);
     } else {
-      console.log(`El guía con ID ${guide} ya existe.`);
+      console.log(`El guía con ID ${guide.getId} ya existe.`);
     }
   }
 
+
   // Método para eliminar un guía por ID
   public removeGuideById(id: number): boolean {
-    const index = this.guias.findIndex(guide => guide === id);
+    const index = this.guias.findIndex(guide => guide=== id);
     if (index !== -1) {
       this.guias.splice(index, 1);
       return true;
@@ -102,22 +106,13 @@ export class PaqueteCultural {
   }
 
   toString(): string {
-    const guiasStr = this.guias
-      .map((guia) => guia.toString())
-      .join('\n');
-
-    return `Paquete Cultural:
-    ID: ${this.id}
-    Nombre: ${this.nombre}
-    Precio: ${this.precio}
-    Fecha de Inicio: ${this.fechaInicio}
-    Fecha de Fin: ${this.fechaFin}
-    Guías:
-    ${guiasStr}`;
+    var x: string = ".";
+    this.guias.forEach((guia) => {x+=guia.valueOf()});
+    return x;
   }
   toStringg(): string {
     const guiasStr = this.guias
-      .map((guia) => guia.toString())
+      .map((guia) => guia)
       .join('\n');
       return guiasStr;
   }

@@ -6,7 +6,7 @@ class GuideService {
 
   constructor() {
     this.client = axios.create({
-      baseURL: 'http://localhost:8080/api/guides',
+      baseURL: 'http://localhost:8090/api/guides',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -24,7 +24,7 @@ class GuideService {
         item.nombre, // Cambiado de item.getnombre a item.nombre
         item.calificacion, // Cambiado de item.getcalificacion a item.calificacion
         item.edad, // Cambiado de item.getedad a item.edad
-        item.fechaNacimiento // Cambiado de item.getfechaNacimiento a item.fechaNacimiento
+        item.fechaNacimiento// Cambiado de item.getfechaNacimiento a item.fechaNacimiento
       ));
   
       // Mostrar los datos de guías en formato JSON

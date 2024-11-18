@@ -10,6 +10,8 @@ const ActualizarPaquete = () => {
   const [precio, setPrecio] = useState<number | ''>('');
   const [fechaInicio, setFechaInicio] = useState('');
   const [fechaFin, setFechaFin] = useState('');
+  const [guias, setGuias] = useState('');
+  const [guiaEncontrada, setGuiaEncontrada] = useState(false);
   const [paqueteEncontrado, setPaqueteEncontrado] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -24,23 +26,28 @@ const ActualizarPaquete = () => {
         setNombre(paquete.getnombre);
         setPrecio(paquete.getprecio);
         setFechaInicio(paquete.getfechaInicio.split('T')[0]); // Solo la parte de la fecha
-        setFechaFin(paquete.getfechaFin.split('T')[0]); // Solo la parte de la fecha
+        setFechaFin(paquete.getfechaFin.split('T')[0]); // Solo la parte de la fecha // Convertir array de IDs a string
+        setGuiaEncontrada(true); // Mostrar los campos para editar
         setPaqueteEncontrado(true);
         setSuccessMessage('Paquete cargado correctamente.');
         setErrorMessage('');
       } else {
         setErrorMessage('No se encontró ningún paquete con ese ID.');
         setPaqueteEncontrado(false);
+        setGuiaEncontrada(false);
       }
     } catch (error) {
       console.error('Error al buscar el paquete:', error);
       setErrorMessage('Error al cargar el paquete. Intente más tarde.');
       setPaqueteEncontrado(false);
+      setGuiaEncontrada(false);
     }
+    
   };
 
   // Función para actualizar el paquete
   const handleUpdatePackage = async () => {
+    const guiaIds = guias.split(',').map((guia) => Number(guia.trim()));
     const fechaIFormateada = format(new Date(fechaInicio).toISOString(), "yyyy-MM-dd'T'HH:mm:ss");
     const fechaFFormateada = format(new Date(fechaFin).toISOString(), "yyyy-MM-dd'T'HH:mm:ss");
     const paqueteActualizado = new PaqueteCultural(
@@ -48,7 +55,8 @@ const ActualizarPaquete = () => {
         nombre,
         Number(precio),
         fechaIFormateada,
-        fechaFFormateada
+        fechaFFormateada,
+        guiaIds
     );
     
     try {
@@ -120,6 +128,13 @@ const ActualizarPaquete = () => {
             type="date"
             value={fechaFin}
             onChange={(e) => setFechaFin(e.target.value)}
+            className="buscar-input"
+          />
+          <input
+            type="text"
+            value={guias}
+            onChange={(e) => setGuias(e.target.value)}
+            placeholder="IDs de guías (separados por comas)"
             className="buscar-input"
           />
           <button onClick={handleUpdatePackage} className="actualizar-button">
