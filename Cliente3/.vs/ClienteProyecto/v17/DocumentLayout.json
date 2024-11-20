@@ -1,0 +1,75 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Personal\\Desktop\\Universidad\\Git\\Empresariales3\\Cliente3\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{62800DF5-D44F-4F1B-B2C9-0EA25F5AB460}|ClienteProyecto\\ClienteProyecto.csproj|c:\\users\\personal\\desktop\\universidad\\git\\empresariales3\\cliente3\\clienteproyecto\\view\\paquete\\listarpaqueteform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62800DF5-D44F-4F1B-B2C9-0EA25F5AB460}|ClienteProyecto\\ClienteProyecto.csproj|solutionrelative:clienteproyecto\\view\\paquete\\listarpaqueteform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62800DF5-D44F-4F1B-B2C9-0EA25F5AB460}|ClienteProyecto\\ClienteProyecto.csproj|c:\\users\\personal\\desktop\\universidad\\git\\empresariales3\\cliente3\\clienteproyecto\\view\\paquete\\buscarpaqueteform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62800DF5-D44F-4F1B-B2C9-0EA25F5AB460}|ClienteProyecto\\ClienteProyecto.csproj|solutionrelative:clienteproyecto\\view\\paquete\\buscarpaqueteform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62800DF5-D44F-4F1B-B2C9-0EA25F5AB460}|ClienteProyecto\\ClienteProyecto.csproj|c:\\users\\personal\\desktop\\universidad\\git\\empresariales3\\cliente3\\clienteproyecto\\service\\paqueteculturalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62800DF5-D44F-4F1B-B2C9-0EA25F5AB460}|ClienteProyecto\\ClienteProyecto.csproj|solutionrelative:clienteproyecto\\service\\paqueteculturalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BuscarPaqueteForm.cs",
+              "DocumentMoniker": "C:\\Users\\Personal\\Desktop\\Universidad\\Git\\Empresariales3\\Cliente3\\ClienteProyecto\\View\\Paquete\\BuscarPaqueteForm.cs",
+              "RelativeDocumentMoniker": "ClienteProyecto\\View\\Paquete\\BuscarPaqueteForm.cs",
+              "ToolTip": "C:\\Users\\Personal\\Desktop\\Universidad\\Git\\Empresariales3\\Cliente3\\ClienteProyecto\\View\\Paquete\\BuscarPaqueteForm.cs",
+              "RelativeToolTip": "ClienteProyecto\\View\\Paquete\\BuscarPaqueteForm.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAASwHIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-20T20:42:03.499Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ListarPaqueteForm.cs",
+              "DocumentMoniker": "C:\\Users\\Personal\\Desktop\\Universidad\\Git\\Empresariales3\\Cliente3\\ClienteProyecto\\View\\Paquete\\ListarPaqueteForm.cs",
+              "RelativeDocumentMoniker": "ClienteProyecto\\View\\Paquete\\ListarPaqueteForm.cs",
+              "ToolTip": "C:\\Users\\Personal\\Desktop\\Universidad\\Git\\Empresariales3\\Cliente3\\ClienteProyecto\\View\\Paquete\\ListarPaqueteForm.cs",
+              "RelativeToolTip": "ClienteProyecto\\View\\Paquete\\ListarPaqueteForm.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAlwCYAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-20T20:41:57.744Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PaqueteCulturalService.cs",
+              "DocumentMoniker": "C:\\Users\\Personal\\Desktop\\Universidad\\Git\\Empresariales3\\Cliente3\\ClienteProyecto\\Service\\PaqueteCulturalService.cs",
+              "RelativeDocumentMoniker": "ClienteProyecto\\Service\\PaqueteCulturalService.cs",
+              "ToolTip": "C:\\Users\\Personal\\Desktop\\Universidad\\Git\\Empresariales3\\Cliente3\\ClienteProyecto\\Service\\PaqueteCulturalService.cs",
+              "RelativeToolTip": "ClienteProyecto\\Service\\PaqueteCulturalService.cs",
+              "ViewState": "AgIAAKAAAAAAAAAAAAAkwKkAAABpAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-20T20:19:08.173Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
