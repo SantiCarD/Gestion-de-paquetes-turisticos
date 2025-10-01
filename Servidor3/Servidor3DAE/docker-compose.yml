@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  # Tu aplicación Spring Boot
+  servidor3dae:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: servidor3dae-app
+    ports:
+      - "8090:8090"
+    environment:
+      - DB_PASSWORD_FILE=/run/secrets/db_password
+      - DB_USER_FILE=/run/secrets/db_user
+      - DB_NAME_FILE=/run/secrets/db_name
+      - DB_HOST_FILE=/run/secrets/db_host
+      - DB_PORT_FILE=/run/secrets/db_port
+      - SERVER_PORT_FILE=/run/secrets/server_port
+    secrets:
+      - db_password
+      - db_user
+      - db_name
+      - db_host
+      - db_port
+      - server_port
+    depends_on:
+      - postgres
+    networks:
+      - servidor3dae-network
+
+  # Base de datos PostgreSQL
+  postgres:
+    image: postgres:15
+    container_name: servidor3dae-postgres
+    environment:
+      - POSTGRES_DB_FILE=/run/secrets/db_name
+      - POSTGRES_USER_FILE=/run/secrets/db_user
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db_password
+    secrets:
+      - db_password
+      - db_user
+      - db_name
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - servidor3dae-network
+
+secrets:
+  db_password:
+    file: ./secrets/db_password.txt
+  db_user:
+    file: ./secrets/db_user.txt
+  db_name:
+    file: ./secrets/db_name.txt
+  db_host:
+    file: ./secrets/db_host.txt
+  db_port:
+    file: ./secrets/db_port.txt
+  server_port:
+    file: ./secrets/server_port.txt
+
+volumes:
+  postgres_data:
+
+networks:
+  servidor3dae-network:
+    driver: bridge
