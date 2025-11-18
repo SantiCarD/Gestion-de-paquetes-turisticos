@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/packages")
-@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000"})
 public class PackageController {
 
     private final IPackageService packageService;

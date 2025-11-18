@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import packageService from '../Servicios/PackageService';
-import guideService from '../Servicios/GuideService';
 import { PaqueteCultural } from '../modelo/PaqueteCultural';
-import { Guide } from '../modelo/Guide';
 import '../App.css'; 
-import { addSeconds, format } from 'date-fns';
+import { format } from 'date-fns';
 
 const AdicionarPaquete = () => {
   const [id, setId] = useState('');
@@ -19,17 +17,10 @@ const AdicionarPaquete = () => {
   const handleAddPackage = async () => {
     try {
       // Convertir string de guías a array de números
-      var guiasArray = guias
+      const guiasArray = guias
         .split(',')
         .map(id => Number(id.trim()))
-        .filter(id => !isNaN(id)); // Filtrar valores no numéricos
-
-      // Buscar todas las guías
-      if(guiasArray.includes(0))
-        {
-          guiasArray.length = 0;
-        }
-      
+        .filter(id => !isNaN(id) && id > 0); // Filtrar valores no numéricos y ceros
 
       // Formatear fechas
       const fechaIFormateada = format(new Date(fechaInicio), "yyyy-MM-dd'T'HH:mm:ss");
@@ -42,7 +33,7 @@ const AdicionarPaquete = () => {
         Number(precio),
         fechaIFormateada,
         fechaFFormateada,
-        guiasArray // NO DEBERIA, DEBERIA MANDAR LOS IDS, NO LOS GUIAS
+        guiasArray
       );
       
 
@@ -51,24 +42,6 @@ const AdicionarPaquete = () => {
       
       if (result) {
         setSuccessMessage('Paquete cultural creado exitosamente.');
-        if(guiasArray.length!=0)
-          {
-        guiasArray.forEach(id => {
-          guideService.buscarGuiaPorId(id)
-              .then(guia => {
-                  if (guia) {
-                      // Asignar un atributo a la guía
-                      guia.setCulturalPackage = nuevoPaquete; // Cambia 'nuevoAtributo' por el nombre del atributo que deseas asignar.
-                      console.log(`Guía actualizada: ${JSON.stringify(guia)}`);
-                      console.log(`zzz: ${guiasArray}`);
-                  } else {
-                      console.error(`No se encontró la guía con ID: ${id}`);
-                  }
-              })
-              .catch(error => {
-                  console.error(`Error al buscar la guía con ID: ${id}`, error);
-              });
-      })};
         setErrorMessage('');
         // Limpiar formulario
         setId('');
@@ -80,7 +53,6 @@ const AdicionarPaquete = () => {
       } else {
         setErrorMessage('Error al crear el paquete cultural. Intente de nuevo.');
         setSuccessMessage('');
-        console.log(`zzz: ${guiasArray.length}`);
       }
     } catch (error) {
       console.error('Error al crear el paquete:', error);

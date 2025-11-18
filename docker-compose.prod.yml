@@ -1,0 +1,67 @@
+# docker-compose.prod.yml
+# Este archivo usa imágenes de Docker Hub en lugar de construir localmente
+# Uso: docker-compose -f docker-compose.prod.yml up -d
+
+services:
+  # Base de datos PostgreSQL
+  postgres:
+    image: postgres:15
+    container_name: servidor3dae-postgres
+    environment:
+      - POSTGRES_DB=servidor3dae
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mi_password_super_secreto_123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Aplicación Spring Boot (Backend)
+  # IMPORTANTE: Reemplaza "tu-usuario" con tu usuario de Docker Hub
+  servidor3dae:
+    image: tu-usuario/servidor3dae:latest  # ← Imagen de Docker Hub
+    container_name: servidor3dae-app
+    ports:
+      - "8090:8090"
+    environment:
+      - DB_PASSWORD=mi_password_super_secreto_123
+      - DB_USER=postgres
+      - DB_NAME=servidor3dae
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - SERVER_PORT=8090
+      - SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT=30000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - app-network
+    restart: on-failure
+
+  # Aplicación React (Frontend)
+  # IMPORTANTE: Reemplaza "tu-usuario" con tu usuario de Docker Hub
+  cliente3react:
+    image: tu-usuario/cliente3react:latest  # ← Imagen de Docker Hub
+    container_name: cliente3react-app
+    ports:
+      - "80:80"
+    depends_on:
+      - servidor3dae
+    networks:
+      - app-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
+

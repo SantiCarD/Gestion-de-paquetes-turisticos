@@ -5,8 +5,10 @@ class GuideService {
   private client: AxiosInstance;
 
   constructor() {
+    // Usar URL relativa cuando está en Docker, absoluta para desarrollo local
+    const apiBase = import.meta.env.VITE_API_URL || '/api';
     this.client = axios.create({
-      baseURL: 'http://localhost:8090/api/guides',
+      baseURL: `${apiBase}/guides`,
       headers: {
         'Content-Type': 'application/json',
       },

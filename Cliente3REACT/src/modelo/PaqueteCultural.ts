@@ -1,6 +1,3 @@
-// Importa las clases o tipos que necesites
-import { Guide } from './Guide'; // Asegúrate de importar tu clase Guide correctamente
-
 export class PaqueteCultural {
   // Definimos las propiedades
   private id: number;
@@ -75,34 +72,7 @@ export class PaqueteCultural {
   
 
   set setguias(value: number[]) {
-    
     this.guias = value;
-  }
-
-  // Método para verificar si un guía existe en la lista de guías
-  public guideExist(id: number): boolean {
-    return this.guias.some(guide => guide === id);
-  }
-
-  // Método para añadir un guía
-  public addGuide(guide: Guide): void {
-    if (!this.guideExist(guide.getId)) {
-      this.guias.push(guide.getId);
-    } else {
-      console.log(`El guía con ID ${guide.getId} ya existe.`);
-    }
-  }
-
-
-  // Método para eliminar un guía por ID
-  public removeGuideById(id: number): boolean {
-    const index = this.guias.findIndex(guide => guide=== id);
-    if (index !== -1) {
-      this.guias.splice(index, 1);
-      return true;
-    }
-    console.log(`No se encontró el guía con ID ${id}.`);
-    return false;
   }
 
   toString(): string {

@@ -5,8 +5,10 @@ class PackageService {
   private client: AxiosInstance;
 
   constructor() {
+    // Usar URL relativa cuando está en Docker, absoluta para desarrollo local
+    const apiBase = import.meta.env.VITE_API_URL || '/api';
     this.client = axios.create({
-      baseURL: 'http://localhost:8090/api/packages',
+      baseURL: `${apiBase}/packages`,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -45,9 +47,7 @@ class PackageService {
   async crearPaquete(paquete: PaqueteCultural): Promise<Boolean | null> {
     try {
       
-      const x = JSON.stringify(paquete, null, 2); 
-     
-      alert(x)
+      const x = JSON.stringify(paquete, null, 2);
       const response: AxiosResponse<PaqueteCultural> = await this.client.post('/create', x);
       console.log(response.data);
       return true;

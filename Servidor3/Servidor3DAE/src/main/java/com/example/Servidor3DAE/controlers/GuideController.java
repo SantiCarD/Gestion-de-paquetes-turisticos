@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5174"})
 @RequestMapping("/api/guides")
 public class GuideController {
     private final IGuideService guideService;
