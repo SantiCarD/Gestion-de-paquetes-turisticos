@@ -26,7 +26,7 @@ services:
   # Aplicación Spring Boot (Backend)
   # IMPORTANTE: Reemplaza "tu-usuario" con tu usuario de Docker Hub
   servidor3dae:
-    image: tu-usuario/servidor3dae:latest  # ← Imagen de Docker Hub
+    image: scard1/servidor3dae:latest  # ← Imagen de Docker Hub
     container_name: servidor3dae-app
     ports:
       - "8090:8090"
@@ -48,7 +48,7 @@ services:
   # Aplicación React (Frontend)
   # IMPORTANTE: Reemplaza "tu-usuario" con tu usuario de Docker Hub
   cliente3react:
-    image: tu-usuario/cliente3react:latest  # ← Imagen de Docker Hub
+    image: scard1/cliente3react:latest  # ← Imagen de Docker Hub
     container_name: cliente3react-app
     ports:
       - "80:80"

@@ -17,10 +17,10 @@ import EliminarGuia from './components/EliminarGuia';
 import ListarGuias from './components/ListarGuias';
 
 const Form1 = ({ setCurrentView }) => (
-  <div className="paquete-cultural-main-content">
-    <h1 className="text-2xl font-bold mb-4">Proyecto Turismo</h1>
-    <nav>
-      <ul className="flex space-x-4">
+  <div className="paquete-cultural-main-content main-page-container">
+    <h1 className="main-title">Proyecto Turismo</h1>
+    <nav className="main-nav">
+      <ul className="main-nav-list">
         <li>
           <button className="paquete-cultural-button" onClick={() => setCurrentView('paqueteCultural')}>
             Paquete Cultural
@@ -38,7 +38,9 @@ const Form1 = ({ setCurrentView }) => (
         </li>
       </ul>
     </nav>
-    <img src={TravellImg} alt="Travell" className="w-full h-full object-cover" />
+    <div className="main-image-container">
+      <img src={TravellImg} alt="Travell" className="main-image" />
+    </div>
   </div>
 );
 
@@ -184,7 +186,7 @@ const App = () => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       {renderView()}
     </div>
   );
